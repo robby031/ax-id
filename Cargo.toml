@@ -5,6 +5,7 @@ edition = "2024"
 rust-version = "1.85"
 description = "Ultra fast 64-bit unique ID generator and parser."
 readme = "README.md"
+license = "MIT"
 keywords = ["guid", "unique", "uuid"]
 categories = ["data-structures", "no-std", "parser-implementations"]
 include = ["src", "benches", "README.md", "LICENSE-MIT"]
