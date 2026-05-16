@@ -1,0 +1,28 @@
+[package]
+name = "ax-id-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4.12"
+ax-id = { path = "..", features = ["std"] }
+
+[[bin]]
+name = "fuzz_parse"
+path = "fuzz_targets/fuzz_parse.rs"
+
+[[bin]]
+name = "fuzz_decode"
+path = "fuzz_targets/fuzz_decode.rs"
+
+[[bin]]
+name = "fuzz_malformed"
+path = "fuzz_targets/fuzz_malformed.rs"
+
+[[bin]]
+name = "fuzz_random_bytes"
+path = "fuzz_targets/fuzz_random_bytes.rs"

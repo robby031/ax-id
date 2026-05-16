@@ -1,0 +1,83 @@
+[package]
+name = "ax-id"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "Ultra fast 64-bit unique ID generator and parser."
+readme = "README.md"
+keywords = ["guid", "unique", "uuid"]
+categories = ["data-structures", "no-std", "parser-implementations"]
+include = ["src", "benches", "README.md", "LICENSE-MIT"]
+repository = "https://github.com/robby031/ax-id"
+
+[features]
+default = ["std", "cli"]
+std = ["dep:ax-rnd"]
+cli = ["std", "dep:clap"]
+serde = ["dep:serde"]
+arbitrary = ["dep:arbitrary"]
+bytemuck = ["dep:bytemuck"]
+zerocopy = ["dep:zerocopy"]
+sqlx = ["std", "dep:sqlx"]
+diesel = ["std", "dep:diesel"]
+sea-orm = ["std", "dep:sea-orm"]
+rkyv = ["dep:rkyv"]
+borsh = ["dep:borsh"]
+
+[dependencies]
+ax-rnd = { version = "0.1", optional = true }
+clap = { version = "4.5", features = ["derive"], optional = true }
+
+serde = { version = "1.0", optional = true }
+arbitrary = { version = "1.4", optional = true }
+bytemuck = { version = "1.14", optional = true }
+zerocopy = { version = "0.8", optional = true, features = ["derive"] }
+sqlx = { version = "0.8", optional = true }
+diesel = { version = "2.2", optional = true }
+sea-orm = { version = "1.1", optional = true }
+rkyv = { version = "0.8", optional = true }
+borsh = { version = "1.5", optional = true }
+
+[profile.bench]
+lto = true
+
+[dev-dependencies]
+criterion = { version = "0.8.2", features = ["html_reports"] }
+uuid = { version = "1.12", features = ["v4", "v7"] }
+ulid = "1.1"
+rs-snowflake = "0.6"
+sonyflake = "0.4"
+ksuid = "0.2"
+fastid = "0.3"
+core_affinity = "0.8.3"
+proptest = "1.5"
+serde_json = "1.0"
+
+[[bin]]
+name = "ax-id"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[[bench]]
+name = "compare"
+harness = false
+
+[[bench]]
+name = "component"
+harness = false
+
+[[bench]]
+name = "local"
+harness = false
+
+[[bench]]
+name = "debug"
+harness = false
+
+[[bench]]
+name = "struct_cmp"
+harness = false
+
+[[bench]]
+name = "eco"
+harness = false

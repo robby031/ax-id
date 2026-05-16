@@ -1,0 +1,11 @@
+/target
+/tests
+.vscode
+/.idea
+/ax-id-*.log
+/ax-id-*.tmp
+/ax-id-*.bak
+/ax-id-*.old
+/ax-id-*.backup
+/ax-id-*.swp
+Cargo.lock
