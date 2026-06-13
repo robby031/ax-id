@@ -48,7 +48,7 @@ criterion = { version = "0.8.2", features = ["html_reports"] }
 uuid = { version = "1.12", features = ["v4", "v7"] }
 ulid = "1.1"
 rs-snowflake = "0.6.0"
-sonyflake = "0.4.0"
+sonyflake = "0.5.1"
 ksuid = "0.2.0"
 fastid = "0.3.3"
 core_affinity = "0.8.3"
