@@ -1,13 +1,18 @@
-pub(crate) const CUSTOM_EPOCH_MS: u64 = 1_704_067_200_000;
 pub(crate) const TIMESTAMP_BITS: u64 = 40;
 pub(crate) const NODE_BITS: u64 = 10;
 pub(crate) const SEQUENCE_BITS: u64 = 13;
 
-pub(crate) const TIMESTAMP_SHIFT: u64 = NODE_BITS + SEQUENCE_BITS;
-pub(crate) const NODE_SHIFT: u64 = SEQUENCE_BITS;
 pub(crate) const SEQUENCE_MASK: u64 = (1 << SEQUENCE_BITS) - 1;
-pub(crate) const MAX_SEQUENCE: u64 = (1 << SEQUENCE_BITS) - 1;
 pub(crate) const MAX_NODE_ID: u16 = (1 << NODE_BITS) - 1;
+
+#[cfg(feature = "std")]
+pub(crate) const CUSTOM_EPOCH_MS: u64 = 1_704_067_200_000;
+#[cfg(feature = "std")]
+pub(crate) const TIMESTAMP_SHIFT: u64 = NODE_BITS + SEQUENCE_BITS;
+#[cfg(feature = "std")]
+pub(crate) const NODE_SHIFT: u64 = SEQUENCE_BITS;
+#[cfg(feature = "std")]
+pub(crate) const MAX_SEQUENCE: u64 = (1 << SEQUENCE_BITS) - 1;
 
 #[cfg(feature = "std")]
 pub use std_dependent::*;
