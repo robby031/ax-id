@@ -1,9 +1,9 @@
 use core::fmt;
 use core::str::FromStr;
 
-use crate::internal::{NODE_BITS, SEQUENCE_BITS, SEQUENCE_MASK, TIMESTAMP_BITS};
 #[cfg(feature = "std")]
 use crate::internal::CUSTOM_EPOCH_MS;
+use crate::internal::{NODE_BITS, SEQUENCE_BITS, SEQUENCE_MASK, TIMESTAMP_BITS};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
