@@ -148,14 +148,14 @@ mod sqlx_impl {
     {
         fn encode(
             self,
-            buf: &mut <DB as Db>::ArgumentBuffer<'q>,
+            buf: &mut <DB as Db>::ArgumentBuffer,
         ) -> Result<sqlx::encode::IsNull, sqlx::error::BoxDynError> {
             <i64 as Encode<DB>>::encode(self.0 as i64, buf)
         }
 
         fn encode_by_ref(
             &self,
-            buf: &mut <DB as Db>::ArgumentBuffer<'q>,
+            buf: &mut <DB as Db>::ArgumentBuffer,
         ) -> Result<sqlx::encode::IsNull, sqlx::error::BoxDynError> {
             <i64 as Encode<DB>>::encode_by_ref(&(self.0 as i64), buf)
         }
