@@ -1,0 +1,34 @@
+name: Miri
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # setiap Senin pukul 03:00 UTC
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  MIRIFLAGS: -Zmiri-disable-isolation -Zmiri-strict-provenance
+
+jobs:
+  miri:
+    name: miri
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: miri
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: miri
+      - name: cargo miri setup
+        run: cargo miri setup
+      - name: miri test (lib, default features)
+        run: |
+          cargo miri test --lib -- \
+            --skip stress_tests::high_volume \
+            --skip stress_tests::multi_thread \
+            --skip uniqueness_single_thread \
+            --skip no_duplicate_generation
+      - name: miri test (diesel unsafe path)
+        run: cargo miri test --lib --features diesel -- --skip stress_tests

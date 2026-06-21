@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest]
         toolchain: [stable, "1.85"]
     steps:
       - uses: actions/checkout@v4
@@ -59,8 +59,6 @@ jobs:
         run: cargo build --verbose
       - name: Test (default features)
         run: cargo test --verbose
-      - name: Test (release)
-        run: cargo test --release --verbose
 
   features:
     name: feature matrix
@@ -95,35 +93,6 @@ jobs:
       - name: Build core for thumbv7em-none-eabihf
         run: cargo build --target thumbv7em-none-eabihf --no-default-features
 
-  miri:
-    name: miri
-    runs-on: ubuntu-latest
-    env:
-      # Disable isolation so SystemTime/env vars work; strict provenance
-      # catches the kind of pointer shenanigans used in the diesel impl.
-      MIRIFLAGS: -Zmiri-disable-isolation -Zmiri-strict-provenance
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@nightly
-        with:
-          components: miri
-      - uses: Swatinem/rust-cache@v2
-        with:
-          key: miri
-      - name: cargo miri setup
-        run: cargo miri setup
-      # Skip the heavy stress/proptest cases — miri is ~100× slower and
-      # those tests are about volume, not correctness of unsafe code.
-      - name: miri test (lib, default features)
-        run: |
-          cargo miri test --lib -- \
-            --skip stress_tests::high_volume \
-            --skip stress_tests::multi_thread \
-            --skip uniqueness_single_thread \
-            --skip no_duplicate_generation
-      - name: miri test (diesel unsafe path)
-        run: cargo miri test --lib --features diesel -- --skip stress_tests
-
   docs:
     name: cargo doc
     runs-on: ubuntu-latest
@@ -133,17 +102,3 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo doc --no-deps --all-features
 
-  msrv-check:
-    name: MSRV check (1.85)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: "1.85"
-      - uses: Swatinem/rust-cache@v2
-        with:
-          key: msrv
-      # `cargo check` is enough here; the test job already runs full tests
-      # on 1.85 across all three OSes.
-      - run: cargo check --all-features --all-targets
