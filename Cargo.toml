@@ -46,7 +46,7 @@ lto = true
 [dev-dependencies]
 criterion = { version = "0.5.1", features = ["html_reports"] }
 uuid = { version = "1.23.3", features = ["v4", "v7"] }
-ulid = "1.2.1"
+ulid = "2.0.1"
 rs-snowflake = "0.6.0"
 sonyflake = "0.4.0"
 ksuid = "0.2.0"
